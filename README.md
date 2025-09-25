@@ -1,11 +1,15 @@
-# 🚀 Xtarz AI Agent- Multi-Agent AI Platform
+# 🚀 Xtarz AI Agents - Multi-Agent AI Platform
 
 A sophisticated, production-ready multi-agent AI platform that intelligently routes user queries to specialized AI agents and models. Built with FastAPI, featuring real-time streaming, advanced analytics, and a beautiful modern UI.
+<img width="1600" height="741" alt="1" src="https://github.com/user-attachments/assets/8df488d5-fb95-4255-a9f0-ee3a8b5fd86e" />
+<img width="1600" height="741" alt="1" src="https://github.com/user-attachments/assets/fa41d34d-b320-410c-9e98-2c2f2936814d" />
+<img width="1586" height="741" alt="3" src="https://github.com/user-attachments/assets/0e102e53-777f-40b6-bfa4-7e492d30db86" />
+<img width="1586" height="741" alt="3" src="https://github.com/user-attachments/assets/65b0d625-3e57-4a30-b05a-a767073e9213" />
+<img width="1586" height="741" alt="3" src="https://github.com/user-attachments/assets/75cd1c3f-489f-411e-b68a-cc034d85add5" />
+<img width="1586" height="741" alt="3" src="https://github.com/user-attachments/assets/6eabffc5-f866-4c0f-890d-22005cc00569" />
+<img width="1586" height="741" alt="3" src="https://github.com/user-attachments/assets/8398c572-af0d-4b8e-8b58-021dfc0b0e22" />
+<img width="1586" height="741" alt="3" src="https://github.com/user-attachments/assets/d80577e4-a7ac-43d9-bf80-cdd153e59144" />
 
-![Xtarz AI Agent](https://img.shields.io/badge/VM%20Nebula-Multi%20Agent%20AI-blue)
-![Python](https://img.shields.io/badge/Python-3.9+-green)
-![FastAPI](https://img.shields.io/badge/FastAPI-Latest-red)
-![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ## ✨ Features
 
@@ -413,6 +417,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Built with ❤️ by the Xtarz AI Agents Team**
 
-*Empowering the future of AI interaction through intelligent multi-agent systems.*
-#   X t a r z - M u l t i A g e n t  
- 
