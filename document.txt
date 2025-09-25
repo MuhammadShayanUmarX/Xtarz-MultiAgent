@@ -1,0 +1,44 @@
+project overview:
+This project is an API-based chat system that intelligently selects agents and models for user queries. It supports real-time and standard chat responses, logging all interactions in a SQLite database. The system can classify queries, choose between Gemini and DeepSeeker models, and provides endpoints for chat and model status. A test suite ensures all core features work as intended. The code is modular, with clear separation for API logic, database operations, and testing.
+
+/app.py 
+
+Purpose:
+Handles the main API logic, agent/model selection, chat processing, streaming responses, and logging interactions to the database.
+
+Key Functions:
+
+detect_agent: Determines if a user query is related to code, research, a specific task, or is a general inquiry.
+choose_model: Selects the appropriate model (Gemini or DeepSeeker) based on the query's length and the presence of an API key.
+agent_prefix: Adds agent-specific instructions to the user's prompt.
+call_gemini, call_deepseeker: Interfaces for calling the respective model APIs.
+call_model: Central dispatcher that routes requests to the correct model.
+
+API Endpoints:
+
+POST /chat: Processes chat requests, returns responses, and logs the interaction in the database.
+POST /chat/stream: Streams chat responses in real-time using Server-Sent Events (SSE).
+GET /models/status: Provides a list of available models and their current status.
+
+/db.py
+
+Purpose: 
+SQLite DB utilities for chat logging and retrieval.
+
+Functions:
+init_db: Creates chat_sessions table if not exists.
+save_chat: Inserts chat record into DB.
+get_recent: Fetches recent chat records.
+
+/demo.py
+
+Purpose:
+Contains a test suite for validating API endpoints and core logic.
+
+Key Functions:
+
+test_agent_detection: Tests the agent selection logic.
+test_model_availability: Checks which models are available.
+test_streaming_response: Validates the streaming chat endpoint.
+test_cost_optimization: Ensures the system selects models in a cost-effective manner.
+main: Runs all tests and prints the results for review.

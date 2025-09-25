@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard - tarz AI Agents</title>
+    <link rel="stylesheet" href="/static/dashboard-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.29.3/index.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-robot"></i>
+                    <span>Xtarz AI Agents</span>
+                </div>
+                <button id="sidebarToggle" class="sidebar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item active">
+                        <a href="#overview" class="nav-link">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Overview</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#analytics" class="nav-link">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Analytics</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#reports" class="nav-link">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#usage" class="nav-link">
+                            <i class="fas fa-clock"></i>
+                            <span>Usage History</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#settings" class="nav-link">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                        <span id="userName" class="user-name">Loading...</span>
+                        <span class="user-role">Premium User</span>
+                    </div>
+                </div>
+                <div class="sidebar-actions">
+                    <button id="chatBtn" class="action-btn" title="Go to Chat">
+                        <i class="fas fa-comments"></i>
+                    </button>
+                    <button id="logoutBtn" class="action-btn" title="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <div class="header-left">
+                    <h1 id="pageTitle">Analytics Dashboard</h1>
+                    <p id="pageSubtitle">Get insights into your AI usage patterns</p>
+                </div>
+                <div class="header-right">
+                    <div class="date-range-picker">
+                        <select id="timeRange">
+                            <option value="7">Last 7 days</option>
+                            <option value="30" selected>Last 30 days</option>
+                            <option value="90">Last 90 days</option>
+                            <option value="365">Last year</option>
+                        </select>
+                    </div>
+                    <button id="refreshBtn" class="btn btn-primary">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh
+                    </button>
+                    <button id="exportBtn" class="btn btn-secondary">
+                        <i class="fas fa-download"></i>
+                        Export
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content Sections -->
+            <div class="content-sections">
+                <!-- Overview Section -->
+                <section id="overview" class="content-section active">
+                    <!-- Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value" id="totalChats">0</div>
+                                <div class="stat-label">Total Conversations</div>
+                                <div class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+12% from last month</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value" id="totalTokens">0</div>
+                                <div class="stat-label">Tokens Used</div>
+                                <div class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+8% from last month</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value" id="avgResponseTime">0s</div>
+                                <div class="stat-label">Avg Response Time</div>
+                                <div class="stat-change negative">
+                                    <i class="fas fa-arrow-down"></i>
+                                    <span>-15% from last month</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value" id="totalCost">$0.00</div>
+                                <div class="stat-label">Total Cost</div>
+                                <div class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+5% from last month</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row -->
+                    <div class="charts-row">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Daily Usage Trend</h3>
+                                <div class="chart-actions">
+                                    <button class="chart-btn active" data-period="7">7D</button>
+                                    <button class="chart-btn" data-period="30">30D</button>
+                                    <button class="chart-btn" data-period="90">90D</button>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="usageChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Agent Distribution</h3>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="agentChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Model Performance -->
+                    <div class="performance-section">
+                        <h3>Model Performance Comparison</h3>
+                        <div class="performance-grid">
+                            <div class="performance-card" id="geminiPerformance">
+                                <div class="model-header">
+                                    <div class="model-info">
+                                        <h4>Gemini 1.5 Flash</h4>
+                                        <span class="model-provider">Google</span>
+                                    </div>
+                                    <div class="model-status online">
+                                        <i class="fas fa-circle"></i>
+                                        Online
+                                    </div>
+                                </div>
+                                <div class="model-metrics">
+                                    <div class="metric">
+                                        <span class="metric-label">Usage</span>
+                                        <span class="metric-value">45%</span>
+                                        <div class="metric-bar">
+                                            <div class="metric-fill" style="width: 45%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="metric">
+                                        <span class="metric-label">Avg Speed</span>
+                                        <span class="metric-value">0.3s</span>
+                                    </div>
+                                    <div class="metric">
+                                        <span class="metric-label">Confidence</span>
+                                        <span class="metric-value">94%</span>
+                                    </div>
+                                    <div class="metric">
+                                        <span class="metric-label">Cost/1K tokens</span>
+                                        <span class="metric-value">$0.002</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="performance-card" id="deepseekPerformance">
+                                <div class="model-header">
+                                    <div class="model-info">
+                                        <h4>DeepSeek Chat</h4>
+                                        <span class="model-provider">DeepSeek</span>
+                                    </div>
+                                    <div class="model-status online">
+                                        <i class="fas fa-circle"></i>
+                                        Online
+                                    </div>
+                                </div>
+                                <div class="model-metrics">
+                                    <div class="metric">
+                                        <span class="metric-label">Usage</span>
+                                        <span class="metric-value">55%</span>
+                                        <div class="metric-bar">
+                                            <div class="metric-fill" style="width: 55%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="metric">
+                                        <span class="metric-label">Avg Speed</span>
+                                        <span class="metric-value">0.7s</span>
+                                    </div>
+                                    <div class="metric">
+                                        <span class="metric-label">Confidence</span>
+                                        <span class="metric-value">97%</span>
+                                    </div>
+                                    <div class="metric">
+                                        <span class="metric-label">Cost/1K tokens</span>
+                                        <span class="metric-value">$0.001</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Analytics Section -->
+                <section id="analytics" class="content-section">
+                    <div class="analytics-grid">
+                        <div class="chart-card full-width">
+                            <div class="chart-header">
+                                <h3>Token Usage Over Time</h3>
+                                <div class="chart-legend">
+                                    <span class="legend-item">
+                                        <span class="legend-color input"></span>
+                                        Input Tokens
+                                    </span>
+                                    <span class="legend-item">
+                                        <span class="legend-color output"></span>
+                                        Output Tokens
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="chart-container large">
+                                <canvas id="tokenChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Response Time Distribution</h3>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="responseTimeChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Confidence Levels</h3>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="confidenceChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Reports Section -->
+                <section id="reports" class="content-section">
+                    <div class="reports-header">
+                        <h3>Generated Reports</h3>
+                        <button id="generateReportBtn" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Generate New Report
+                        </button>
+                    </div>
+                    
+                    <div class="report-card active-report">
+                        <div class="report-header">
+                            <div class="report-info">
+                                <h4>Monthly Usage Summary</h4>
+                                <p>Comprehensive analysis of your AI usage for the last 30 days</p>
+                            </div>
+                            <div class="report-actions">
+                                <button class="btn btn-sm btn-secondary" id="viewReportBtn">
+                                    <i class="fas fa-eye"></i>
+                                    View
+                                </button>
+                                <button class="btn btn-sm btn-primary" id="downloadReportBtn">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+                        <div class="report-preview" id="reportPreview">
+                            <div class="report-loading">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                Generating report...
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Usage History Section -->
+                <section id="usage" class="content-section">
+                    <div class="usage-header">
+                        <h3>Recent Activity</h3>
+                        <div class="usage-filters">
+                            <select id="agentFilter">
+                                <option value="">All Agents</option>
+                                <option value="Code Assistant">Code Assistant</option>
+                                <option value="Research Assistant">Research Assistant</option>
+                                <option value="Task Helper">Task Helper</option>
+                                <option value="General Assistant">General Assistant</option>
+                            </select>
+                            <select id="modelFilter">
+                                <option value="">All Models</option>
+                                <option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
+                                <option value="deepseek-chat">DeepSeek Chat</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="usage-table-container">
+                        <table class="usage-table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Agent</th>
+                                    <th>Model</th>
+                                    <th>Query</th>
+                                    <th>Tokens</th>
+                                    <th>Response Time</th>
+                                    <th>Confidence</th>
+                                    <th>Cost</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usageTableBody">
+                                <tr>
+                                    <td colspan="8" class="loading-row">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                        Loading usage history...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="reportModal" class="modal">
+        <div class="modal-content report-modal">
+            <div class="modal-header">
+                <h2>Detailed Report</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="detailedReportContent">
+                    <!-- Report content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="/static/dashboard-script.js"></script>
+</body>
+</html>

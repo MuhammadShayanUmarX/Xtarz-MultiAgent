@@ -1,0 +1,13 @@
+# python 3.9+  (3.13.5)
+
+requests
+dotenv
+openai
+flask
+fastapi
+uvicorn 
+typing
+asyncio
+genai
+pydantic
+datetime
