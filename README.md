@@ -389,12 +389,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **DeepSeek** - Powerful reasoning models
 - **SQLite** - Lightweight database solution
 
-## 📞 Support
 
-- **Documentation:** [Project Wiki](link-to-wiki)
-- **Issues:** [GitHub Issues](link-to-issues)
-- **Discussions:** [GitHub Discussions](link-to-discussions)
-- **Email:** support@vmnebula.ai
 
 ## 🔮 Roadmap
 
@@ -411,5 +406,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 **Built with ❤️ by the Xtarz AI Agents Team**
+
 
 
